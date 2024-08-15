@@ -37,7 +37,7 @@ const Footer = () => {
           <a href="https://www.instagram.com/elancephantoms.uett?igsh=ejZxZHd5c3YzcjRr">
             <img src={instagram} className="w-10 h-10" />
           </a>
-          <a href="/">
+          <a href="https://www.linkedin.com/company/elance-phantoms-uet-taxila/">
             <img src={linkedin1} className="w-10 h-10" />
           </a>
           <a href="https://x.com/ElancePhantoms?t=hLZiO6A4EDJPqq_EnZD_sw&s=09">

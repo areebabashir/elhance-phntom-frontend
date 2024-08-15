@@ -3,6 +3,15 @@ import Layout from "../Layouts/Layout";
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 
+// Utility function to truncate text
+const truncateText = (text, wordLimit) => {
+  const words = text.split(' ');
+  if (words.length <= wordLimit) {
+    return text;
+  }
+  return words.slice(0, wordLimit).join(' ') + '...';
+};
+
 const Events = () => {
   const [events, setEvents] = useState([]);
 
@@ -50,10 +59,12 @@ const Events = () => {
       <div className="md:w-[80%] pt-20 pb-20 pl-4 pr-4 m-auto grid grid-cols-1 md:grid-cols-3 gap-8">
         {events.map((event) => (
           <div key={event._id} className="bg-white shadow-md rounded-lg overflow-hidden border border-black">
-            <img src={`http://localhost:8000/${event.eventPhoto}`} className="w-full h-48 object-cover" alt="Event" />
+            <img src={`http://localhost:8000/${event.eventPhoto}`} className="w-full h-80 object-cover p-4" alt="Event" />
             <div className="p-4 flex flex-col ">
               <h3 className="text-xl font-semibold mb-2">{event.eventTitle}</h3>
-              <p className="text-gray-700 mb-4 ">{event.eventDescription}</p>
+              <p className="text-gray-700 mb-4">
+                {truncateText(event.eventDescription, 15)}
+              </p>
               <div className="flex justify-center w-full">
                 <button
                   className="text-white px-4 py-2 rounded flex "
