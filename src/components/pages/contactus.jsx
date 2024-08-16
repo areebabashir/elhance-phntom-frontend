@@ -8,26 +8,39 @@ const ContactUs = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [message, setMessage] = useState('');
+  const [errors, setErrors] = useState({});
+
+  const validateForm = () => {
+    const errors = {};
+    if (!name.trim()) errors.name = 'Name is required.';
+    if (!email.trim()) errors.email = 'Email is required.';
+    if (!message.trim()) errors.message = 'Message is required.';
+
+    setErrors(errors);
+    return Object.keys(errors).length === 0;
+  };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    try {
-      const response = await axios.post('http://localhost:8000/api/v1/contact/contactus', {
-        name,
-        email,
-        message,
-      });
+    if (validateForm()) {
+      try {
+        const response = await axios.post('http://localhost:8000/api/v1/contact/contactus', {
+          name: name.trim(),
+          email: email.trim(),
+          message: message.trim(),
+        });
 
-      if (response.status === 201) {
-        toast.success('Message sent successfully!');
-        // Clear form fields
-        setName('');
-        setEmail('');
-        setMessage('');
+        if (response.status === 201) {
+          toast.success('Message sent successfully!');
+          // Clear form fields
+          setName('');
+          setEmail('');
+          setMessage('');
+        }
+      } catch (error) {
+        toast.error(`Error: ${error.response?.data?.message || error.message}`);
       }
-    } catch (error) {
-      toast.error(`Error: ${error.response.data.message}`);
     }
   };
 
@@ -57,6 +70,7 @@ const ContactUs = () => {
                   className="w-full px-6 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                   required
                 />
+                {errors.name && <p className="text-red-500 text-sm mt-2">{errors.name}</p>}
               </div>
               <div className="mb-4">
                 <input
@@ -68,6 +82,7 @@ const ContactUs = () => {
                   className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                   required
                 />
+                {errors.email && <p className="text-red-500 text-sm mt-2">{errors.email}</p>}
               </div>
               <div className="mb-4">
                 <textarea
@@ -79,6 +94,7 @@ const ContactUs = () => {
                   className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                   required
                 ></textarea>
+                {errors.message && <p className="text-red-500 text-sm mt-2">{errors.message}</p>}
               </div>
               <button
                 type="submit"
@@ -93,6 +109,5 @@ const ContactUs = () => {
     </Layout>
   );
 }
-
 
 export default ContactUs;

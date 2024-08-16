@@ -35,13 +35,13 @@ const JoinPage = () => {
 
   const validateForm = () => {
     const errors = {};
-    if (!selectedOption) errors.selectedOption = 'Please select an option.';
-    if (!selectedRole) errors.selectedRole = 'Please select a role.';
-    if (!formData.name) errors.name = 'Full name is required.';
-    if (!formData.email) errors.email = 'Email is required.';
-    if (!formData.whatsapp) errors.whatsapp = 'Whatsapp number is required.';
-    if (!formData.department) errors.department = 'Department is required.';
-    if (!formData.vision) errors.vision = 'Vision is required.';
+    if (!selectedOption.trim()) errors.selectedOption = 'Please select an option.';
+    if (!selectedRole.trim()) errors.selectedRole = 'Please select a role.';
+    if (!formData.name.trim()) errors.name = 'Full name is required.';
+    if (!formData.email.trim()) errors.email = 'Email is required.';
+    if (!formData.whatsapp.trim()) errors.whatsapp = 'Whatsapp number is required.';
+    if (!formData.department.trim()) errors.department = 'Department is required.';
+    if (!formData.vision.trim()) errors.vision = 'Vision is required.';
 
     setErrors(errors);
     return Object.keys(errors).length === 0;
@@ -52,13 +52,13 @@ const JoinPage = () => {
     if (validateForm()) {
       try {
         const response = await axios.post('http://localhost:8000/api/v1/form/submit-form', {
-          selectedOption,
-          name: formData.name,
-          email: formData.email,
-          whatsapp: formData.whatsapp,
-          department: formData.department,
-          selectedRole,
-          vision: formData.vision,
+          selectedOption: selectedOption.trim(),
+          name: formData.name.trim(),
+          email: formData.email.trim(),
+          whatsapp: formData.whatsapp.trim(),
+          department: formData.department.trim(),
+          selectedRole: selectedRole.trim(),
+          vision: formData.vision.trim(),
         });
 
         if (response.status === 201) {
@@ -157,7 +157,7 @@ const JoinPage = () => {
           <div className="border border-black p-4 rounded-2xl mx-auto" style={{ width: '90%' }}>
             <h2 className="pl-4 font-bold">Whatsapp no</h2>
             <input
-              type="number"
+              type="tel"
               name="whatsapp"
               value={formData.whatsapp}
               onChange={handleInputChange}
@@ -206,21 +206,21 @@ const JoinPage = () => {
           </div>
 
           <div className="border border-black p-4 rounded-2xl mx-auto" style={{ width: '90%' }}>
-            <h2 className="pl-4 font-bold">Vision</h2>
+            <h2 className="pl-4 font-bold">Vision to join</h2>
             <input
               type="text"
               name="vision"
               value={formData.vision}
               onChange={handleInputChange}
-              className="p-2 mb-4 outline-none border-transparent w-full sm:w-1/2"
+              className="p-2 mb-4 outline-none border-transparent w-full"
               style={{ borderBottom: "1px solid black" }}
-              placeholder="Enter your vision"
+              placeholder="Enter your vision to join us"
               required
             />
             {errors.vision && <p className="text-red-500 text-sm mt-2">{errors.vision}</p>}
           </div>
 
-          <div className="text-center">
+          <div className="flex justify-center">
             <button type="submit" style={buttonStyle}>Submit</button>
           </div>
         </form>

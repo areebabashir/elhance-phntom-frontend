@@ -56,7 +56,7 @@ const Events = () => {
         </div>
       </div>
 
-      <div className="md:w-[80%] pt-20 pb-20 pl-4 pr-4 m-auto grid grid-cols-1 md:grid-cols-3 gap-8">
+      <div className="md:w-[70%] pt-20 pb-20 pl-4 pr-4 m-auto grid grid-cols-1 md:grid-cols-3 gap-4">
         {events.map((event) => (
           <div key={event._id} className="bg-white shadow-md rounded-lg overflow-hidden border border-black">
             <img src={`http://localhost:8000/${event.eventPhoto}`} className="w-full h-80 object-cover p-4" alt="Event" />
